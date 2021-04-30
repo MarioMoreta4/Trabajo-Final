@@ -1,0 +1,123 @@
+using System;
+
+namespace SISTEMA CALCULADORA
+{
+    public class Prestamos
+    {
+        public double monto;
+        public int cuotas;
+        public double interesAnual;
+        public double pagos;
+        public double intereses;
+        public double abonoCapital;
+        public double saldo;
+
+       public void Monto() { 
+            Console.WriteLine("Digite el monto");
+            monto = Convert.ToDouble(Console.ReadLine());
+        } 
+        public double retornarMonto() { 
+            return monto;
+        } 
+        public void Cuotas() { 
+            Console.WriteLine("Digite la cantidad de cuotas en meses");
+            cuotas = int.Parse(Console.ReadLine());
+        } 
+
+        public int retornarCutas() { 
+            return cuotas;
+        } 
+
+        public void Interes() { 
+            Console.WriteLine("Digite el porcentaje de interes Anual");
+            intereAnual = Convert.ToDouble(Console.ReadLine());
+            intereAnual = intereAnual / 100 ;
+            intereAnual = Math.Pow((1+intereAnual), 0.0833333333) -1;
+
+        } 
+
+        public double retornarInteres() { 
+            return intereAnual;
+        } 
+
+        public void calculoPago() { 
+
+            pagos = Math.Pow((1+intereAnual), -(cuotas));
+            pagos = 1 - pagos;
+            pagos = intereAnual / pagos;
+            pagos = monto * pagos; 
+            pagos = Math.Round(pagos, 2);
+        } 
+
+        public double retornarPago() { 
+            return pagos;
+        } 
+        public void calculoInterese() { 
+
+            intereses = monto * interesAnual;
+            intereses =  Math.Round(intereses, 2);
+
+        } 
+        public double retornarIntereses() { 
+            return intereses;
+        }
+        public void calculoAbonoCapital() { 
+
+            abonoCapital = pagos - intereses;
+            abonoCapital = Math.Round(abonoCapital, 2);
+        } 
+        public double retornarAbonoCapital() { 
+            return abonoCapital;
+        } 
+        public void calculoSaldo() { 
+
+            saldo = monto - abonoCapital;
+            saldo = Math.Round(saldo, 2);
+
+        } 
+        public double retornarSaldo() { 
+            return saldo;
+        } 
+        public void nuevosvalores(double saldoNew, double interesesNew,double abonoCapitalNew) { 
+            monto = saldoNew;
+            intereses = interesesNew;
+            abonoCapital = abonoCapitalNew;
+            
+        } 
+    }
+
+    class program {
+        
+        public static void Main(string[] args){
+            Prestamo prestamo = new Prestamo();
+  
+            prestamo.Monto();
+            prestamo.Cuotas();
+            prestamo.Interes();
+
+            prestamo.calculoPago();
+            prestamo.calculoInterese();
+            prestamo.calculoAbonoCapital();
+            prestamo.calculoSaldo();
+
+            Console.WriteLine("\ncuota");
+            Console.WriteLine(prestamo.retornarPago());
+
+            int i;
+            i =1;
+            Console.WriteLine("----------------------------------------------------------------------------------");
+            while (i<= prestamo.retornarCutas() )
+            {
+
+            Console.WriteLine("|   "+i+"         {0}          {2}              {1}        {3}",prestamo.retornarPago(),prestamo.retornarAbonoCapital(),prestamo.retornarIntereses(),prestamo.retornarSaldo());
+                i++;
+            prestamo.nuevosvalores(prestamo.retornarSaldo(),prestamo.retornarIntereses(),prestamo.retornarAbonoCapital());
+            prestamo.calculoInterese();
+            prestamo.calculoAbonoCapital();
+            prestamo.calculoSaldo();
+            }
+
+
+        }
+    }
+}
